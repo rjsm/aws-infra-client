@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# atd Starts/stop the "at" daemon
+#
+# chkconfig:   345 95 06
+# description: Runs commands scheduled by the "at" command at the time \
+#    specified when "at" was run, and runs batch commands when the load \
+#    average is low enough.
+
+### BEGIN INIT INFO
+# Provides: salt-unregister
+# Required-Start: $net
+# Required-Stop: $net
+# Default-Start: 345
+# Default-Stop: 95
+# Short-Description: unregister from the salt-master on shutdown
+# Description:       unregister from the salt-master on shutdown
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+if [ "$1" = "start" ] ; then
+    salt-call saltutil.revoke_auth
+fi
