@@ -1,5 +1,5 @@
 # Author:: Ross Smith (<rjsm@umich.edu>)
-# Cookbook Name:: caen-infra
+# Cookbook Name:: caen-client
 # Recipe:: configure
 #
 # Apache 2.0
