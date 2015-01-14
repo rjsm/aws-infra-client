@@ -46,7 +46,7 @@ master:
 # Since salt uses detached ids it is possible to run multiple minions on the
 # same machine but with different ids, this can be useful for salt compute
 # clusters.
-# id: <%= node['salt']['minion']['id'] %>
+# id: 
 
 # Append a domain to a hostname in the event that it does not exist.  This is
 # useful for systems where socket.getfqdn() does not actually result in a
@@ -63,23 +63,6 @@ master:
 #  deployment: datacenter4
 #  cabinet: 13
 #  cab_u: 14-15
-
-grains:
-  environment: <%= node.chef_environment %>
-  role:
-  <%- node['roles'].each do |role| %>
-    - <%= role %>
-  <%- end %>
-<%- node['salt']['minion']['grains'].each_pair do |grain, value| %>
-  <%- if value.kind_of?(Array) %>
-  <%= grain %>:
-  <%- value.each do |item| %>
-    - <%= item %>
-  <%- end %>
-  <%- else %>
-  <%= grain %>: <%= value %>
-  <%- end %>
-<%- end %>
 
 
 # Where cache data goes
