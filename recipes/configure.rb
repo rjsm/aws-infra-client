@@ -34,10 +34,6 @@ file "/etc/rc.d/init.d/salt_unregister" do
   mode  '0755'
 end
 
-service 'salt_unregister' do
-  action [:enable ]
-end
-
 #
 #setup syslog monitoring
 #
