@@ -27,13 +27,6 @@ template "/etc/salt/minion" do
 end
 
 
-#drop file to unregister at shutdown
-file "/etc/rc.d/init.d/salt_unregister" do
-  owner 'root'
-  group 'root'
-  mode  '0755'
-end
-
 #
 #setup syslog monitoring
 #
