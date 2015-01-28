@@ -37,8 +37,18 @@ file "/etc/rsyslog.conf" do
   action :create
 end
 
+#
+# setup yum-cron-security
+#
+yum_package "yum-cron-security" do
+  action :upgrade
+end
 
-
+file "/etc/yum/yum-cron-security.conf" do
+  owner 'root'
+  group 'root'
+  mode  '644'
+end
 #
 #setup ganglia/monitoring 
 #
