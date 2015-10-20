@@ -1,0 +1,14 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  tasks:
+  - name: drop rsyslog file in place
+    copy: dest=/etc/rsyslog.conf src=files/rsyslog.conf
+
+  - name: install yum-cron-security
+    yum: name={{ item }} state=latest
+    with_items:
+    - yum-cron-security
+
+  - name: configure yum-cron-security
+    copy: dest=/etc/yum/yum-cron-security.conf src=files/yum-cron-security.conf 
