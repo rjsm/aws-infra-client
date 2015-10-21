@@ -5,10 +5,14 @@
   - name: drop rsyslog file in place
     copy: dest=/etc/rsyslog.conf src=files/rsyslog.conf
 
-  - name: install yum-cron-security
+  - name: install packages
     yum: name={{ item }} state=latest
     with_items:
     - yum-cron-security
+    - ansible
 
   - name: configure yum-cron-security
     copy: dest=/etc/yum/yum-cron-security.conf src=files/yum-cron-security.conf 
+  
+  - name: configure ansible pull
+    copy: dest=/etc/cron.d/ansible-pull src=files/ansible-pull
