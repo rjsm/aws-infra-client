@@ -24,7 +24,7 @@ end
 
 # install ansible from our package
 yum_package "ansible" do
-  source /tmp/ansible.rpm
+  source "/tmp/ansible.rpm"
   action :upgrade
 end
 
