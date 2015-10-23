@@ -5,10 +5,25 @@
 # Apache 2.0
 #
 
-#
-#setup salt minion 
-#
-yum_package "ansible" do
+# get file from bucket
+ruby_block "download-object" do
+  block do
+    require 'aws-sdk'
+
+    s3 = AWS::S3.new
+
+    myfile = s3.buckets['linuxinfrastructure-files'].objects['/ansible-files/packages/ansible-1.9.4-2.amzn1.noarch.rpm']
+    Dir.chdir("/tmp")
+    File.open("ansible.rpm", "w") do |f|
+      f.syswrite(myfile.read)
+      f.close
+    end
+  end
+  action :run
+end
+
+# install ansible from our package
+yum_package "/tmp/ansible.rpm" do
   action :upgrade
 end
 
