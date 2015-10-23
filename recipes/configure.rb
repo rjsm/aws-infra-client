@@ -23,7 +23,8 @@ ruby_block "download-object" do
 end
 
 # install ansible from our package
-yum_package "/tmp/ansible.rpm" do
+yum_package "ansible" do
+  source /tmp/ansible.rpm
   action :upgrade
 end
 
