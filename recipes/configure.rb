@@ -42,7 +42,7 @@ ruby_block "set-tags" do
     require 'aws-sdk'
 
    ec2 = AWS::EC2.new
-   inst = ec2.instance[node["opsworks"]["instance"]["aws_instance_id"]]
+   inst = ec2.Instance[node["opsworks"]["instance"]["aws_instance_id"]]
    inst.tags['Shortcode'] = node["caen"]["shortcode"]
    inst.tags['Purpose'] = node["caen"]["purpose"]
    inst.tags['Role'] = node["caen"]["role"]
