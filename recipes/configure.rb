@@ -35,3 +35,19 @@ template "/etc/cron.d/ansible-pull" do
   group "root"
   mode "0644"
 end
+
+# try to set tags
+ruby_block "set-tags" do
+  block do
+    require 'aws-sdk'
+
+   ec2 = AWS::EC2.new
+   inst = ec2.instance[node["opsworks"]["instance"]["aws_instance_id"]]
+   inst.tags['Shortcode'] = node["caen"]["shortcode"]
+   inst.tags['Purpose'] = node["caen"]["purpose"]
+   inst.tags['Role'] = node["caen"]["role"]
+   inst.tags['Owner'] = node["caen"]["owner"]
+  end
+  action :run
+end
+
