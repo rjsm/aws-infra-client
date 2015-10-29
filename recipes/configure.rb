@@ -41,12 +41,17 @@ ruby_block "set-tags" do
   block do
     require 'aws-sdk'
 
-   ec2 = AWS::EC2.new
-   inst = ec2.Instance[node["opsworks"]["instance"]["aws_instance_id"]]
-   inst.tags['Shortcode'] = node["caen"]["shortcode"]
-   inst.tags['Purpose'] = node["caen"]["purpose"]
-   inst.tags['Role'] = node["caen"]["role"]
-   inst.tags['Owner'] = node["caen"]["owner"]
+   ec2 = AWS::EC2::Resource.new(region:node["opsworks"]["instance"]["region"])
+   inst = ec2.instance(node["opsworks"]["instance"]["aws_instance_id"])
+   inst.create_tags({ dry_run: false,
+                      tags: [ { key: "Shortcode", value: node["caen"]["Shortcode"],},
+                              { key: "Purpose", value: node["caen"]["Purpose"],},
+                              { key: "Role", value: node["caen"]["Role"],},
+                              { key: "Owner", value: node["caen"]["Owner"],}, ], } )
+#   inst.tags['Shortcode'] = node["caen"]["shortcode"]
+#   inst.tags['Purpose'] = node["caen"]["purpose"]
+#   inst.tags['Role'] = node["caen"]["role"]
+#   inst.tags['Owner'] = node["caen"]["owner"]
   end
   action :run
 end
