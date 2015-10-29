@@ -41,17 +41,24 @@ ruby_block "set-tags" do
   block do
     require 'aws-sdk'
 
-   ec2 = AWS::EC2::Resource.new(region:node["opsworks"]["instance"]["region"])
-   inst = ec2.instance(node["opsworks"]["instance"]["aws_instance_id"])
-   inst.create_tags({ dry_run: false,
-                      tags: [ { key: "Shortcode", value: node["caen"]["Shortcode"],},
-                              { key: "Purpose", value: node["caen"]["Purpose"],},
-                              { key: "Role", value: node["caen"]["Role"],},
-                              { key: "Owner", value: node["caen"]["Owner"],}, ], } )
-#   inst.tags['Shortcode'] = node["caen"]["shortcode"]
-#   inst.tags['Purpose'] = node["caen"]["purpose"]
-#   inst.tags['Role'] = node["caen"]["role"]
-#   inst.tags['Owner'] = node["caen"]["owner"]
+    AWS.config(region: node["opsworks"]["instance"]["region"])
+
+    inst = AWS::EC2::Instance.new(node["opsworks"]["instance"]["aws_instance_id"])
+    inst.tag('Shortcode', :value => node["caen"]["Shortcode"])
+    inst.tag('Purpose', :value => node["caen"]["Purpose"])
+    inst.tag('Role', :value => node["caen"]["Role"])
+    inst.tag('Owner', :value => node["caen"]["Owner"])
+
+    puts inst.root_device_type() 
+# the following commented section is for the v2 sdk, which while the officially supported version,
+# doesn't work in opsworks...
+#   ec2 = AWS::EC2::Resource.new(region:node["opsworks"]["instance"]["region"])
+#   inst = ec2.instance(node["opsworks"]["instance"]["aws_instance_id"])
+#   inst.create_tags({ dry_run: false,
+#                      tags: [ { key: "Shortcode", value: node["caen"]["Shortcode"],},
+#                              { key: "Purpose", value: node["caen"]["Purpose"],},
+#                              { key: "Role", value: node["caen"]["Role"],},
+#                              { key: "Owner", value: node["caen"]["Owner"],}, ], } )
   end
   action :run
 end
