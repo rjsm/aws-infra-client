@@ -68,6 +68,7 @@ ruby_block "set-tags" do
             bd.tag('Owner', :value => node["caen"]["Owner"])
             bd.tag('Name', :value => node["opsworks"]["instance"]["hostname"])
         end
+    }
 
 # the following commented section is for the v2 sdk, which while the officially supported version,
 # doesn't work in opsworks...
