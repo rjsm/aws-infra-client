@@ -55,7 +55,7 @@ ruby_block "set-tags" do
         iface.tag('Purpose', :value => node["caen"]["Purpose"])
         iface.tag('Role', :value => node["caen"]["Role"])
         iface.tag('Owner', :value => node["caen"]["Owner"])
-        iface.tag('Name', :value => node["opsworks"]["instance"]["hostname"]
+        iface.tag('Name', :value => node["opsworks"]["instance"]["hostname"])
     }
 
     puts inst.root_device_type() 
