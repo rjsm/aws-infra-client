@@ -60,7 +60,7 @@ ruby_block "set-tags" do
 
     inst.block_devices().each {
         |block|
-        if block.ebs? then
+        if defined? block["ebs"] then
             bd = AWS::EC2::Volume.new(block["ebs"]["volume_id"])
             bd.tag('Shortcode', :value => node["caen"]["Shortcode"])
             bd.tag('Purpose', :value => node["caen"]["Purpose"])
