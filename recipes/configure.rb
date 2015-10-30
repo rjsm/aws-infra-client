@@ -58,7 +58,17 @@ ruby_block "set-tags" do
         iface.tag('Name', :value => node["opsworks"]["instance"]["hostname"])
     }
 
-    puts inst.root_device_type() 
+    inst.block_devices().each {
+        |block|
+        if block.ebs? then
+            bd = AWS::EC2::Volume.new(block["ebs"]["volume_id"])
+            bd.tag('Shortcode', :value => node["caen"]["Shortcode"])
+            bd.tag('Purpose', :value => node["caen"]["Purpose"])
+            bd.tag('Role', :value => node["caen"]["Role"])
+            bd.tag('Owner', :value => node["caen"]["Owner"])
+            bd.tag('Name', :value => node["opsworks"]["instance"]["hostname"])
+        end
+
 # the following commented section is for the v2 sdk, which while the officially supported version,
 # doesn't work in opsworks...
 #   ec2 = AWS::EC2::Resource.new(region:node["opsworks"]["instance"]["region"])
