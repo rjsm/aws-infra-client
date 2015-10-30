@@ -58,10 +58,9 @@ ruby_block "set-tags" do
         iface.tag('Name', :value => node["opsworks"]["instance"]["hostname"])
     }
 
-    inst.block_devices().each {
         |block|
-        if defined? block["ebs"] then
-            bd = AWS::EC2::Volume.new(block["ebs"]["volume_id"])
+        if block[:ebs] != nil then
+            bd = AWS::EC2::Volume.new(block[:ebs][:volume_id])
             bd.tag('Shortcode', :value => node["caen"]["Shortcode"])
             bd.tag('Purpose', :value => node["caen"]["Purpose"])
             bd.tag('Role', :value => node["caen"]["Role"])
