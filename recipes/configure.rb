@@ -58,6 +58,7 @@ ruby_block "set-tags" do
         iface.tag('Name', :value => node["opsworks"]["instance"]["hostname"])
     }
 
+    inst.block_devices().each {
         |block|
         if block[:ebs] != nil then
             bd = AWS::EC2::Volume.new(block[:ebs][:volume_id])
