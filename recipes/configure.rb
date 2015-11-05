@@ -23,8 +23,13 @@ ruby_block "download-object" do
 end
 
 # install ansible from our package
-yum_package "ansible" do
-  source "/tmp/ansible.rpm"
+package "ansible" do
+  case node[:platform]
+  when 'amazon'
+    source "/tmp/ansible.rpm"
+  #when 'centos', 'redhat', 'fedora'
+  #  package_name 'ansible'
+  end
   action :upgrade
 end
 
