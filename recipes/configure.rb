@@ -41,6 +41,10 @@ template "/etc/cron.d/ansible-pull" do
   mode "0644"
 end
 
+#run our pull once, so it's setup for ansible
+execute "ansible-pull" do
+  command  /usr/bin/ansible-pull -d /var/ansible/checkout/ -C pull -U https://github.com/CAEN/ansible-configuration  playbooks/local.yml -i hosts 
+end
 # try to set tags
 ruby_block "set-tags" do
   block do
